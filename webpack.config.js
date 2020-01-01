@@ -5,6 +5,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 //return config
 module.exports = (env, argv) => {
+  if (argv == null) {
+    argv = env;
+    env = {};
+  }
   console.log(`Current mode is ${argv.mode || "development"}`)
   return {
 
