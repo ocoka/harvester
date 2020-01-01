@@ -22,6 +22,7 @@ module.exports = (env, argv) => {
       path: path.resolve(__dirname, 'dist'),
       filename:
         argv.mode === 'production' ? '[name].[contenthash].js' : '[name].js',
+      //publicPath: argv.mode === 'production' ? 'dist/' : '',
     },
 
     resolve: {
