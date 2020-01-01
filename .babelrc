@@ -2,6 +2,8 @@
   "sourceMaps": true,
   "presets": [
     ["@babel/preset-env", {
+      "useBuiltIns": false,
+      "modules": false,
       "debug": true,
       "targets": {
         "chrome": "79"
