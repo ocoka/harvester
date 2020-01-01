@@ -2,6 +2,7 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CheckerPlugin } = require('awesome-typescript-loader');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
 const webpack = require('webpack');
 //return config
 module.exports = (env, argv) => {
@@ -53,6 +54,8 @@ module.exports = (env, argv) => {
       noEmitOnErrors: true,
     },
     plugins: [
+      new webpack.HashedModuleIdsPlugin(),
+      // new webpack.HotModuleReplacementPlugin(),
       new MiniCssExtractPlugin({
         filename:
           argv.mode === 'production'
@@ -60,6 +63,7 @@ module.exports = (env, argv) => {
             : '[name].css',
       }),
       new CheckerPlugin(),
+      // new InlineManifestWebpackPlugin(),
     ],
     devServer: {
       contentBase: path.join(__dirname, 'dist'),
