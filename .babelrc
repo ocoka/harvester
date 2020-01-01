@@ -1,0 +1,12 @@
+{
+  "sourceMaps": true,
+  "presets": [
+    ["@babel/preset-env", {
+      "debug": true,
+      "targets": {
+        "chrome": "79"
+      }
+    }]
+  ],
+  "ignore": ["node_modules"]
+}
