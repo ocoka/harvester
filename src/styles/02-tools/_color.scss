@@ -1,0 +1,8 @@
+// apply level back and front colors
+// @param  $level level of context
+//
+@mixin mixColor($level) {
+  /* mixColor($level: #{$level}) */
+  color: _a(#{$level}-color);
+  background-color: _a(#{$level}-backcolor);
+}

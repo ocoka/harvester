@@ -1,0 +1,7 @@
+.u-inset {
+  @each $name in map-keys($settings_spaces) {
+    &-#{$name} {
+      @include mixInsetSquishSpace($name);
+    }
+  }
+}

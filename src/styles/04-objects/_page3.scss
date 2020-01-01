@@ -1,0 +1,27 @@
+.o-page3 {
+  display: flex;
+  flex-flow: row nowrap;
+  height: 100%;
+  &__sidebar {
+    flex: 0 0 auto;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+    min-width: getSize(x10);
+  }
+  &__work-area {
+    flex: 1 1 50%;
+  }
+  @include mixDisplayMax(tab) {
+    flex-flow: column-reverse nowrap;
+    min-height: none;
+    &__sidebar {
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      overflow-y: hidden;
+      overflow-x: auto;
+    }
+  }
+}

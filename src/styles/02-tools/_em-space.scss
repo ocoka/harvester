@@ -1,0 +1,10 @@
+@mixin mixEmSpace($level: html) {
+  /* mixEmSpace($level: #{$level}) */
+  padding: _a(#{$level}-em)+em;
+}
+@mixin mixEmSpaceSquish($level: html) {
+  $ratio: _a(#{$level}-ratio);
+  /* mixEmSpaceSquish($level: #{$level}), $ratio = #{$ratio} */
+  $value: _a(#{$level}-em)+em;
+  padding: $value calc(#{$value} * #{$ratio});
+}

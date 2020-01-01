@@ -1,0 +1,33 @@
+$padOut: m;
+$marOut: m;
+$marIn: 10%;
+$titleBorder: _a(caption-color);
+.c-block-title {
+  position: relative;
+  @include mixInsetSquishSpace($padOut);
+  margin-top: getFontSize($marOut);
+  text-align: left;
+}
+.c-block-title:before {
+  margin-top: calc(-#{getFontSize($marOut)} - #{getFontSize($padOut)});
+  box-sizing: content-box;
+  padding: 0 getFontSize(s);
+  border-left: 1px solid $titleBorder;
+  border-top: 1px dashed $titleBorder;
+  margin-left: $marIn;
+  float: left;
+  white-space: nowrap;
+  @include mixColor(caption);
+  @include mixTypography(caption);
+  content: attr(title);
+  border-radius: 1em 0 0 1em;
+}
+.c-block-title:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: -1px;
+  left: 0;
+  border-top: 1px solid $titleBorder;
+  width: calc(#{$marIn} + #{getFontSize($padOut)} * #{_a(html-ratio)} - 3px);
+}

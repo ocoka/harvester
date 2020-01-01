@@ -1,0 +1,8 @@
+a {
+  @include mixTypography(link);
+  @include mixColor(link);
+  text-decoration: none;
+  &::visited {
+    color: _a(link-color);
+  }
+}

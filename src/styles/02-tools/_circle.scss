@@ -1,0 +1,34 @@
+// TODO
+@mixin mixCircle() {
+  /* mixCircle()  */
+  border-radius: 50%;
+  display: inline-flex;
+  text-align: center;
+  vertical-align: middle;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  @if not $pad {
+    @include mixCircleSize($size);
+  }
+  @else {
+    height: 0;
+    width: 0;
+    padding: 1em;
+  }
+}
+@mixin mixCircleSize($size) {
+  /* mixCircleSize ($size: #{$size})*/
+  $_size: getFontSize($size);
+  width: $_size;
+  height: $_size;
+  padding: 0;
+}
+
+@mixin mixCircleSizeAll($suf: '') {
+  @each $sizeName in map-keys($settings_spaces) {
+    &#{&+_+$sizeName+$suf} {
+        @include mixCircleSize($sizeName);
+    }
+  }
+}

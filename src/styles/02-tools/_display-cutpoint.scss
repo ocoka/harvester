@@ -1,0 +1,58 @@
+// define adaptiveness cutpoint
+$cutpoints: (
+  theather: 1980px,
+  desktop: 1200px,
+  tab: 800px,
+  phone: 480px,
+  mobile: 480px,
+  watch: 360px
+);
+
+
+@mixin mixDisplayMax($maxWidth) {
+  @if map-has-key($cutpoints, $maxWidth) {
+    $maxWidth: map-get($cutpoints, $maxWidth);
+  }
+  @media screen and (max-width: $maxWidth) {
+    @content;
+  }
+}
+
+@mixin mixDisplayMin($minWidth) {
+  @if map-has-key($cutpoints, $minWidth) {
+    $minWidth: map-get($cutpoints, $minWidth);
+  }
+  @media screen and (min-width: $minWidth) {
+    @content;
+  }
+}
+
+@mixin mixDisplay($maxWidth, $minWidth) {
+  @if map-has-key($cutpoints, $maxWidth) {
+    $maxWidth: map-get($cutpoints, $maxWidth);
+  }
+  @if map-has-key($cutpoints, $minWidth) {
+    $minWidth: map-get($cutpoints, $minWidth);
+  }
+  @if ($maxWidth < $minWidth) {
+    @include mixDisplay($minWidth, $maxWidth) {
+      @content;
+    };
+  }
+  @else {
+    @media screen and (max-width: $maxWidth) and (min-width: $minWidth) {
+      @content;
+    }
+  }
+}
+
+@mixin mixDisplayAfter($minWidth) {
+  @include mixDisplayMin($minWidth) {
+    @content;
+  };
+}
+@mixin mixDisplayBefore($maxWidth) {
+  @include mixDisplayMax($maxWidth) {
+    @content;
+  };
+}

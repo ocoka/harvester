@@ -1,0 +1,8 @@
+// Converts a typography level into CSS styles.
+@mixin mixTypography($level) {
+  font-size: _a(#{$level}-font-size);
+  font-weight: _a(#{$level}-font-weight);
+  line-height: _a(#{$level}-line-height);
+  font-family: _a(#{$level}-font-family);
+  letter-spacing: _a(#{$level}-letter-spacing);
+}

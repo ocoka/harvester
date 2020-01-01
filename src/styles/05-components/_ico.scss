@@ -1,0 +1,31 @@
+.c-ico {
+  white-space: nowrap;
+  @include mixIcon(none);
+  @each $icoName in map-keys($settings_icons) {
+    &#{&}_#{$icoName} {
+      @include mixIconName($icoName);
+    }
+  }
+  @each $icoSize in $settings_iconSizes {
+    &#{&}_#{$icoSize} {
+      @include mixIconSize($icoSize);
+    }
+  }
+  @each $size, $val in $settings_spaces {
+    &#{&}_pad-#{$size} {
+      &:before {
+        margin-right: $val;
+      }
+    }
+    &#{&}_off-#{$size} {
+      @include mixIconOffset($val);
+    }
+  }
+
+  &#{&}_abs {
+    position: relative;
+    &:before {
+      position: absolute;
+    }
+  }
+}

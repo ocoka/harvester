@@ -1,0 +1,21 @@
+.c-fan-head {
+  @include mixRectColorBorder(subtitle);
+  background-image: if($dark-theme,url("assets/svgcomp/border-light.svg"),url("assets/svgcomp/border.svg"));
+  background-repeat: no-repeat;
+  background-size: auto;
+  border: transparent .5rem solid;
+  background-origin: border-box;
+  text-align: left;
+  background-position: left center;
+}
+.c-fan-head_bordered {
+  border-image: if($dark-theme,url("assets/svgcomp/border-light.svg"),url("assets/svgcomp/border.svg"));
+  background-image: none;
+  border-image-width: auto;
+  border-image-repeat: stretch;
+  border-width: getFontSize(xs);
+  border-style: dashed;
+  border-color: _c(black);
+  border-image-slice: 20;
+  max-width: map-get($cutpoints, tab) - 100;
+}

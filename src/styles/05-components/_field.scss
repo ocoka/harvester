@@ -1,0 +1,81 @@
+.c-field {
+  position: relative;
+  display: inline-flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  margin-top: 2em;
+  @include mixTypography(input);
+  @include mixRectColorBorder(input);
+  @each $sizeName in $settings_buttonSizes {
+    &#{&}_#{$sizeName} {
+      font-size: getFontSize($sizeName);
+      //padding-top: getFontSize($sizeName);
+    }
+  }
+  &#{&}_opaque {
+    margin: 0;
+  }
+
+  input,
+  .c-input {
+    @include mixEmSpaceSquish(input);
+    color: inherit;
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+    flex: 1 1 auto;
+    position: relative;
+    margin: 0;
+    font-size: inherit;
+    line-height: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    width: 100%;
+    &:focus {
+      outline: none;
+    }
+  }
+  label {
+    color: _a(hint-color);
+    @include mixTypography(hint);
+    position: absolute;
+    top: 50%;
+    left: 5%;
+    font-size: 1em;
+    line-height: 1;
+    transform: translateY(-50%);
+    transition: .4s ease;
+    transition-property: font-size, transform, color;
+    cursor: copy;
+    user-select: none;
+    pointer-events: none;
+  }
+  &#{&}_hover:hover label,
+  input:focus+label,
+  input:valid:not(:placeholder-shown)+label {
+    transform: translate(-12%, -256%);
+    font-size: 1.1em;
+    color: _a(input-color);
+  }
+  &#{&}_hover#{&}_opaque:hover label,
+  &#{&}_opaque input:focus+label,
+  &#{&}_opaque input:valid:not(:placeholder-shown)+label {
+    color: transparent;
+  }
+
+
+  .c-ico {
+    flex: 0 0 auto;
+    visibility: hidden;
+    cursor: pointer;
+    position: relative;
+    left: -.5em;
+  }
+  input:focus~.c-ico,
+  .c-ico:hover {
+    visibility: visible;
+  }
+}

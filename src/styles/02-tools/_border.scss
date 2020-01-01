@@ -1,0 +1,6 @@
+@mixin mixBorder($level) {
+  /* mixBorder (#{$level}) */
+  border-color: _a(#{$level}-border-color);
+  border-style: _a(#{$level}-border-style);
+  border-width: _a(#{$level}-border-width);
+}

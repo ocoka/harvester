@@ -1,0 +1,7 @@
+.u-stack {
+  @each $name in map-keys($settings_spaces) {
+    &-#{$name} {
+      @include mixStackSpace($name);
+    }
+  }
+}

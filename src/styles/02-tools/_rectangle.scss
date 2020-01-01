@@ -1,0 +1,7 @@
+@mixin mixRectColorBorder($level) {
+  /* mixRectColorBorder($level: "#{$level}")*/
+  border-radius: _a(#{$level}-radius);
+  @include mixColor($level);
+  @include mixBorder($level);
+  @include mixShadow($level);
+}

@@ -1,0 +1,49 @@
+
+@function _a($param) {
+  $i: str-index($param, "--");
+  @if $i == null {
+  @return var(--#{$param});
+}
+  @return $param;
+}
+@function _c($param) {
+  @return var(--color-#{$param});
+}
+
+@function getSize($val) {
+  @if type-of($val) == 'number' {
+    @return $val;
+  }
+  $i: str-index($val, --space-);
+  @if $i == null {
+    @return var(--space-#{$val});
+  }
+  @return $val;
+}
+
+@function getFontSize($val) {
+  @if type-of($val) == 'number' {
+    @return $val;
+  }
+  $i: str-index($val, --space-);
+  @if $i == null {
+    @return var(--space-font-#{$val});
+  }
+  @if $i > 0 {
+    $val: str-slice($val, $i+8, str-length($val)-1);
+  }
+  @return var(--space-font-#{$val});
+}
+@import 'styles/02-tools/color';
+@import 'styles/02-tools/hover';
+@import 'styles/02-tools/typography_runtime';
+@import 'styles/02-tools/icons';
+@import 'styles/02-tools/other';
+@import 'styles/02-tools/shadow';
+@import 'styles/02-tools/rectangle';
+@import 'styles/02-tools/spaces';
+@import 'styles/02-tools/circle';
+@import 'styles/02-tools/border';
+@import 'styles/02-tools/display-cutpoint';
+@import 'styles/02-tools/border';
+@import 'styles/02-tools/em-space';

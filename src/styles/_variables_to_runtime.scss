@@ -1,0 +1,24 @@
+:root {
+  --theme: #{$theme};
+  @each $icon, $content in $settings_icons {
+    --icon-#{$icon}: #{$content};
+  }
+  @each $name, $color in $settings_colors {
+    --color-#{$name + ""}: #{$color};
+  }
+  @each $size, $val in $settings_spaces {
+    --space-#{$size}: #{$val};
+  }
+  @each $size, $val in $settings_font_spaces {
+    --space-font-#{$size}: #{$val};
+  }
+  @each $name in map-keys($settings_atoms) {
+    $config: map-get($settings_atoms, $name);
+    @if type-of($config) == map {
+      @each $param in map-keys($config) {
+        $val: map-get($config, $param);
+        --#{$name}-#{$param}: #{$val};
+      }
+    }
+  }
+}

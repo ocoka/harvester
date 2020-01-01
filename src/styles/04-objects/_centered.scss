@@ -1,0 +1,19 @@
+.o-centered {
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-content: stretch;
+  align-items: stretch;
+  text-align: center;
+  &__cont {
+    flex: 0 0 auto;
+    min-height: 2.3rem;
+    overflow: hidden;
+    &#{&}_full {
+      margin: auto 0;
+      overflow-y: auto;
+      flex: 0 1 100%;
+    }
+  }
+}

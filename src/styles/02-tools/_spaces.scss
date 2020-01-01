@@ -1,0 +1,59 @@
+//https://medium.com/eightshapes-llc/space-in-design-systems-188bcbae0d62
+// INSET-SPACE: For interface containers.
+// INSET-SQUISH-SPACE: For buttons, form elements, cells.
+// STACK-SPACE: For vertically stacked content.
+// INLINE-SPACE: For things displayed inline.
+
+// Create inset-space
+//
+// @param  {Number} inset-space to set
+@mixin mixInsetSpace($value) {
+/* mixInsetSpace(#{$value}) */
+  padding: getFontSize($value);
+}
+
+// Create inset-squish-space
+//
+// @param  {Number} inset-squish-space to set
+@mixin mixInsetSquishSpace($value, $level: html) {
+  $ratio: _a(#{$level}-ratio);
+  /* mixInsetSquishSpace($value: #{$value}, $level: #{$level}, ratio = #{$ratio}) */
+  $value: getFontSize($value);
+  padding: $value calc(#{$value} * #{$ratio});
+}
+
+// Create stack-space
+//
+// @param  {Number} stack-space to set
+@mixin mixStackSpace($value) {
+/* mixStackSpace(#{$value}) */
+  $value: getSize($value);
+  margin-block-end: $value;
+  &:last-child {
+    margin-block-end: 0;
+  }
+}
+
+// Create inline-space
+//
+// @param  {Number} inline-space to set
+@mixin mixInlineSpace($value) {
+/* mixInlineSpace(#{$value}) */
+  $value: getSize($value);
+  margin-inline-end: $value;
+  &:last-child {
+    margin-inline-end: 0;
+  }
+}
+
+// Create inline-space left
+//
+// @param  {Number} inline-space to set
+@mixin mixInlineSpaceLeft($value) {
+/* mixInlineSpace(#{$value}) */
+  $value: getSize($value);
+  margin-inline-start: $value;
+  &:first-child {
+    margin-inline-start: 0;
+  }
+}

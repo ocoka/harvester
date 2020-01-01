@@ -1,0 +1,96 @@
+$offset: -10000px;
+$cache: ();
+
+@mixin cache($key) {
+  @if not map-has-key($cache, $key) {
+    @at-root %cache_#{$key} {
+      @content;
+    }
+    $cache: map-merge($cache, ($key: 1)) !global;
+  }
+  @extend %cache_#{$key};
+}
+
+// @param {string} $name - icon name, should be present at $settings_icons
+// @param {before | after} $pos - what pseudo element to use for icon (before by default)
+@mixin mixIconName($name, $pos:before) {
+  &:#{$pos} {
+    /* mixIconName ($name: #{$name}, $pos:#{$pos}) */
+    content: var(--icon-#{$name});
+  }
+}
+
+// @param {string | unit} $size - can be any defined at $settings_sizes
+// @param {before | after} $pos - what pseudo element to use for icon (before by default)
+@mixin mixIconSize($size, $pos: before) {
+  @include cache('icon_size_'+$size+'_pos_'+$pos) {
+    $size: getSize($size);
+    &:#{$pos} {
+      width: $size;
+      height: $size;
+    }
+  }
+}
+// @param {unit} $off - positive or negative offset between icon an element content (0 be default)
+// @param {before | after} $pos - what pseudo element to use for icon (before by default)
+@mixin mixIconOffset($off:0 , $pos:before) {
+  @include cache('icon_off_'+$off+'_pos_'+$pos) {
+    $orient: left;
+    @if $pos == after {
+      $orient: right;
+    }
+    &:#{$pos} {
+      #{$orient}:$offset - $off;
+    }
+  }
+}
+
+// @param {atom|color} $level - level where icon color defined
+// @param {before | after} $pos - what pseudo element to use for icon (before by default)
+@mixin mixIconColor($level, $pos: before) {
+  @include cache('icon_color_pos'+$pos+'_level'+$level) {
+    $color: _a(#{$level}-ico-color);
+    @include mixIconColorName($color, $pos);
+  }
+}
+@mixin mixIconColorName($color: currentColor, $pos: before) {
+  &:#{$pos} {
+    $shadOffset: $offset;
+    @if ($pos==before) {
+      $shadOffset: -1*$offset;
+    }
+    filter: drop-shadow($shadOffset 0px $color);
+  }
+}
+// @param {string} $name - icon name, should be present at $settings_icons
+// @param {string | unit} $size - can be any defined at $settings_sizes
+// @param {before | after} $pos - what pseudo element to use for icon (before by default)
+// @param {boolean} $abs - should icon be positioned absolutely in relative element, or icon will be relative to static element (CSS)
+// @param {unit} $off - positive or negative offset between icon an element content (0 be default)
+@mixin mixIcon($name, $size: $settings_defaultIcoSize, $pos: before, $abs: false, $off: 0) {
+  overflow: hidden;
+  &:#{$pos} {
+    @include cache('icon') {
+      font-size: 0;
+      display: inline-block;
+      vertical-align: middle;
+      text-align: center;
+    }
+  }
+  @include cache('icon_pos'+$pos+'_abs_'+$abs) {
+    @if $abs {
+      position: relative;
+    }
+    &:#{$pos} {
+      @if $abs {
+        position: absolute;
+      } @else {
+        position: relative;
+      }
+    }
+  }
+  @include mixIconName($name, $pos);
+  @include mixIconSize($size, $pos);
+  @include mixIconOffset(0, $pos);
+  @include mixIconColorName($pos: $pos);
+}

@@ -1,0 +1,7 @@
+@for $i from 1 through 6 {
+  h#{$i} {
+    @include mixTypography(h#{$i});
+    margin: 0;
+    padding:0;
+  }
+}

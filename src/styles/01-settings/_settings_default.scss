@@ -1,0 +1,89 @@
+// define sizes for theme, format is: "step" "start from" "map of abbreviation to generate"
+
+/// flag that is dark theme
+
+$dark-theme: false !default;
+
+/// ## Table of size abbreviations. Used anywhere in project
+///  * structured as map of units to tuples
+///  * keys of the map is a "step" of rythm
+///  * in each tuble the first value is a number, from wich size chart for that "step" will begin,
+///  * and second value of tuple is a list of abbreviated names
+///  * for each abbreviated name the correspond size in pixel, incremented by "step", will be generated
+
+$settings_sizes: (
+  3px: 4 ('xxs' 'xs' 's' 'm' 'xm' 'l' 'xl' 'xxl'),
+  6px: 32 ('x2' 'x3' 'x4'),
+  12px: 56 ('x5' 'x6' 'x7' 'x8' 'x9'),
+  24px: 128 ('x10' 'x11' 'x12' 'x13' 'x14' 'x15' 'x16')
+) !default;
+
+/// ## Defines size names and BEM modifiers that will be available in button component classes
+/// @example markup
+///    <button class='c-btn'> Standard button </button>
+///    <button class='c-btn c-btn_xs'> Small button </button>
+///
+
+$settings_buttonSizes: 's' 'm' 'xm' 'l' 'xl' 'xxl' !default;
+
+/// ## Defines size names and BEM modifiers that will be available in icon component classes
+/// @example markup
+///    <i class='c-ico'> Standard ico </i>
+///    <i class='c-ico c-ico_xs'> Small ico </button>
+///
+
+$settings_iconSizes: 's' 'm' 'xm' 'l' 'xl' 'xxl' 'x2' 'x3' 'x4' 'x5' 'x6' !default;
+
+/// ## Defines size names and BEM modifiers that will be available in input component classes
+/// @example markup
+///    <input class='c-ico'> Standard input </input>
+///    <input class='c-ico c-ico_xs'> Small input </input>
+///
+
+$settings_inputSizes: 's' 'm' 'xm' 'l' 'xl' 'xxl' !default;
+
+/// ## Defines default size name that will be used for icon
+/// @example markup
+///    <i class='c-ico'> Standard icon </i>
+///
+
+$settings_defaultIcoSize: 'm' !default;
+
+/// ## Defines two size names used as ration in EM unit computation on paddings
+/// @example markup
+///    <input class='c-input'> I have padding (s/xm)em  </input>
+///
+
+$settings_defaultEmRatio: 'xs' 'm' !default;
+
+// make flat map of above sizes, but reverse "abbreviation" : "generated size in px"
+$settings_spaces: makeSpaces();
+// same as above but in "rem"
+$settings_font_spaces: makeFontSpaces();
+// list of available level properties and its defaults
+$settings_user_def: () !default;
+
+/// "atom" is elementary configuration parameter, and can be read by use of "_a" function, ex: _a("global-font-family")
+/// "Atoms" and "Levels" allows maintain living style guides & pattern libraries in an agile process, and on a budget. This approaches helps you keep your development process simple
+///  – and your UX consistent – as you iterate on patterns and scale over time.
+/// @see {function} _a
+$settings_atom_def: map-merge((
+  backcolor: initial,
+  color: _c(black),
+  backhover: initial,
+  hover: initial,
+  border-width: 0,
+  border-style: none,
+  border-color: initial,
+  radius: 0,
+  shadow: none,
+  ico-color: _c(black),
+  font-size: getFontSize(nth($settings_defaultEmRatio,2)),
+  line-height: 1,
+  font-weight: 500,
+  font-family: 'Montserrat',
+  letter-spacing: inherit,
+  ratio: 16 / 9,
+  em: getSize(nth($settings_defaultEmRatio,1))/getSize(nth($settings_defaultEmRatio,2)),
+  image: none
+), $settings_user_def);

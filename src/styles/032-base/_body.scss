@@ -1,0 +1,13 @@
+html {
+  @include mixTypography(html);
+  @include mixColor(html);
+}
+body {
+  @include mixColor(body-1);
+}
+html,
+body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}

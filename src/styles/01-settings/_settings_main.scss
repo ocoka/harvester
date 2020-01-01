@@ -1,0 +1,123 @@
+// here all levels defined
+$settings_atoms: (
+  html: newLevel((
+    backcolor: _c(white),
+    line-height: map-get($settings_atom_def, ratio),
+  ), $name: html),
+
+  h1: newLevel((font-size: getFontSize('x2'), line-height: 1,                           font-weight: 300), $name: h1),
+  h2: newLevel((font-size: getFontSize('xxl'),line-height: 1,                           font-weight: 400), $name: h2),
+  h3: newLevel((font-size: getFontSize('xl'), line-height: getLineHeight('xl', 1.0667), font-weight: 400), $name: h3),
+  h4: newLevel((font-size: getFontSize('l'),  line-height: getLineHeight('l', 1.1765),  font-weight: 400), $name: h4),
+  h5: newLevel((font-size: getFontSize('xm'), line-height: getLineHeight('xm', 1.333),  font-weight: 400), $name: h5),
+  h6: newLevel((font-size: getFontSize('m'),  line-height: 1,                           font-weight: 500), $name: h6),
+  body-2: newLevel((
+    font-size: getFontSize(m), line-height: getLineHeight(m, 1.7143), font-weight: 500), $name: body-2),
+  body-1: newLevel((
+    font-size: getFontSize(m), line-height: getLineHeight(m, 1.4268), font-weight: 400), $name: body-1, $parent: body-2 ),
+  primary: newLevel((
+    backcolor: #3ea35a,
+    backhover: #3ea35a,
+    color: white,
+    hover: white,
+    ico-color: #3ea35a
+  )),
+  secondary: newLevel((
+    backcolor: #858585,
+    backhover: #858585,
+    color: white,
+    hover: white,
+    ico-color: #858585
+  )),
+  info: newLevel((
+    backcolor: #3E66A3,
+    backhover: #3E66A3,
+    color: white,
+    hover: white,
+    ico-color: #3E66A3
+  )),
+  alert: newLevel((
+   backcolor: #AE5656,
+   backhover: #AE5656,
+   color: white,
+   hover: white,
+   ico-color: #AE5656
+  )),
+  warn: newLevel((
+   backcolor: _c(orange),
+   backhover: _c(orange),
+   color: white,
+   hover: white,
+   ico-color: _c(orange)
+  )),
+  weak: newLevel((
+    color: #A3A3A3,
+    ico-color: #A3A3A3
+  )),
+  disabled: newLevel((
+
+   )),
+  link: newLevel((
+
+  ), $name: link
+  ),
+  title: newLevel((
+
+  ), $name: title, $parent: h6),
+  subtitle: newLevel((
+
+    ), $name: subtitle),
+  caption: newLevel((
+    font-size: getFontSize('m'),
+    line-height: getLineHeight('m', 1.6667),
+    font-weight: 400
+  ), $name: caption),
+  hint: newLevel((
+    color: #858585,
+    ico-color: #858585
+  ), $name: hint, $parent: caption),
+  button: newLevel((
+    line-height: 1,
+    font-weight: 600,
+    shadow:  2px 2px 4px rgba(0, 0, 0, 0.1),
+    backcolor: white,
+    color: black,
+    backhover: white,
+    hover: black
+  ), $name: button),
+  input: newLevel((
+    font-size: inherit,
+    line-height: 1,
+    font-weight: 400,
+    backcolor: #F7F7F7,
+    shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.1)
+  ), $name: input),
+  tags: newLevel((
+    backcolor: rgba(255, 255, 255, 0.5),
+    color: #3EA35A,
+    backhover: white,
+    hover: #3EA35A
+  ), $name: tags),
+  tags2: newLevel((
+    color: #3E66A3,
+    hover: #3E66A3
+  ), $name: tags2, $parent: tags),
+  menu: newLevel((
+      color: _c(black),
+      backcolor: _c(grey87),
+      border-width: 1px,
+      border-style: solid,
+      border-color: _c(grey94),
+      radius: getSize(s),
+      font-weight: 800
+    ), $name: menu
+  ),
+  dialog: newLevel((
+      backcolor: _c(white)
+    ), $name: dialog
+  ),
+  notify: newLevel((
+    font-size: getFontSize(m),
+    font-weight: 600
+  ), $name: notify)
+);

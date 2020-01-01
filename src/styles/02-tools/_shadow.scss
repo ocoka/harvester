@@ -1,0 +1,5 @@
+// add box shadow for level
+@mixin mixShadow($level: button) {
+  /* mixShadow(#{level}: 'button') */
+    box-shadow: _a(#{$level}-shadow);
+}

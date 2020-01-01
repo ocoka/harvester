@@ -1,0 +1,7 @@
+.u-inline {
+  @each $name in map-keys($settings_spaces) {
+    &-#{$name} {
+      @include mixInlineSpace($name);
+    }
+  }
+}

@@ -1,0 +1,18 @@
+.c-round-label {
+  vertical-align: middle;
+  &:before {
+    @include mixColor(primary);
+    content: attr(title);
+  }
+  &_alert:before {
+    @include mixColor(alert);
+  }
+  &_warn:before {
+    @include mixColor(warn);
+  }
+  &#{&+_long}:before {
+    width: auto;
+    padding-left: getFontSize(s);
+    padding-right: getFontSize(s);
+  }
+}

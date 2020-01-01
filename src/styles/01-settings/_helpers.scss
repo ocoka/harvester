@@ -1,0 +1,160 @@
+@import 'math';
+$remRatio: 0.0625;
+
+$__atom_cache__: ();
+@function newLevel($config, $name: null, $parent: $settings_atom_def) {
+  $val:();
+  @if (not global_variable_exists(__atom_cache__)) {
+    $__atom_cache__: () !global;
+  }
+  @if(type-of($parent) != map) {
+    @if (not map-has-key($__atom_cache__, $parent)) {
+      @error "$parent "#{$parent}" not found nor a map";
+    }
+    $parent: map-get($__atom_cache__, $parent);
+  }
+  @each $param in map-keys($settings_atom_def) {
+    $val: map-merge($val, (
+      #{$param}: if(type-of($config) == map and map-has-key($config, $param), map-get($config, $param), map-get($parent, $param))
+    ))
+  }
+  @if ($name != null) {
+    $__atom_cache__: map-merge($__atom_cache__, ($name: $val)) !global;
+  }
+  @return $val;
+}
+
+@function makeSpaces() {
+  $spaces: ();
+  @each $step, $config in $settings_sizes {
+    $start: nth($config, 1);
+    $sizes: nth($config, 2);
+    $ind: 0;
+    @each $size in $sizes {
+      $spaces: map-merge($spaces, ($size: $start + $step*$ind));
+      $ind: $ind+1;
+    }
+  }
+  @return $spaces;
+}
+
+/// ### returns size in pixel unit from size abbrev
+/// @group functions_most_used
+/// @example scss $a = getSize(xl) //will return 24px (up to theme config)
+/// @param  {string} $val abbreviated size name
+/// @return {pixel} value in pixel unit
+/// @see $settings_sizes
+@function getSize($val) {
+  $ret : $val;
+  @if map_has_key($settings_spaces, $val) {
+    $val: map-get($map: $settings_spaces, $key: $val);
+  }
+  @return $val;
+}
+@function getSizeIndex($val, $num) {
+  $ret: $val;
+  $keys: map-keys($settings_spaces);
+  $pos: index($keys, $val);
+  @if ($pos) {
+    $pos: $pos + $num;
+  }
+  $val: nth($keys, $pos);
+  @if ($val) {
+    $ret: map-get($map: $settings_spaces, $key: $val);
+  }
+  @return $ret;
+}
+/// ### converts from abbreviated size name to size in "rem" unit
+/// @access private
+/// @param  {string} $size name of size
+/// @return {rem}
+
+@function sizeToFont($size) {
+  $size: getSize($size);
+  @if type-of($size) != number {
+    @return $size;
+  }
+  @if unit($size) == rem or unit($size) == em {
+    @return $size;
+  }
+  $size: strip-unit($size);
+  $size: $size * $remRatio;
+  @return $size * 1rem;
+}
+/// ### return rem size from abbreviated size name
+/// @group functions_most_used
+/// @param  {string} $size name of size
+/// @return {rem}
+@function getFontSize($size) {
+  @return sizeToFont($size);
+}
+@function makeFontSpaces() {
+  $spaces: ();
+  @each $size, $val in $settings_spaces {
+    $spaces: map-merge($spaces, ($size: sizeToFont($val)));
+
+  }
+  @return $spaces;
+}
+/// ### return nearest to floor calculated line-height from given size name and source line-height
+/// @param  {string} $size name of size
+/// @param  {number} $lh line-height ratio
+/// @return {rem}
+@function getLineHeight($size, $lh) {
+  $dec: nth(map-keys($settings_sizes), 1);
+  $dec: $dec/1px;
+  $size: getSize($size);
+  $size: $size * $lh;
+  $lh: $dec;
+  @while($lh < $size) {
+    $lh: $lh + $dec;
+  }
+  @return sizeToFont($lh);
+}
+/// ### get value for given "atom"
+/// @group functions_most_used
+/// @access public
+/// @see $settings_atoms for more info about "atom's"
+/// @param {string} $param name of "atom"
+/// @return {any}
+/// @throw No level config found
+@function _a($param) {
+  @if (map-has-key($settings_atoms, $param)) {
+    @return  map-get($settings_atoms, $param);
+  }
+  $try: 0;
+  $level: null;
+  $level_config: null;
+  $i: str-index($param, '-');
+  @if ($i == null) {
+    @warn No level found for $param;
+    @return $param;
+  }
+  @while($i != null) {
+    $level: if($level, #{$level}-#{str-slice($param, 1, $i - 1)},str-slice($param, 1, $i - 1));
+    $param: str-slice($param, $i + 1);
+    $level_config: map-get($settings_atoms, $level);
+    $i: str-index($param, '-');
+    @if (type-of($level_config) == map) {
+      $i: null;
+    }
+  }
+  @if (type-of($level_config) != map) {
+    @error No level config found for "#{$level}";
+  }
+  @if not map-has-key($level_config, $param) {
+    @return map-get($settings_atom_def, $param);
+  }
+  @return map-get($level_config, $param);
+}
+/// ### get color value for internal color name
+/// @param {string} $param name of color
+/// @access public
+/// @return {hex}
+/// @throw No color for given name found
+@function _c($param) {
+  @if not map-has-key($settings_colors, $param) {
+    @error No color found for "#{$param}";
+  }
+  @return  map-get($settings_colors, $param);
+}

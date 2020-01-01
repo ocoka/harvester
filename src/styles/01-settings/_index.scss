@@ -1,0 +1,20 @@
+@import './math';
+@import './helpers';
+@import './color_by_name';
+@import './icon-set-generated';
+@import './settings_default';
+// It's sad but we can't use dinamic import for theme chooser
+// decause for almost 6 year that feature can't be implemented by SASS developers
+// issue was opened on May 8, 2013
+// still in debates
+// https://github.com/sass/sass/issues/739`
+// maybe migrate back to Stylus or LESS ?
+// Stylus project stalled for half an year
+
+// use choosing block logic also DON'T WORK
+// @if ($theme == 'main') {
+//  @import './settings_main';
+// }
+// @if ($theme == 'dark') {
+//  @import './settings_dark';
+// }

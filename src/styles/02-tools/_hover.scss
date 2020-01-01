@@ -1,0 +1,10 @@
+// apply level hover colors for back and front
+// @param  $level level of context
+//
+@mixin mixHover($level, $when: ':hover') {
+  /* mixHover($level: #{$level}, $when: #{$when}) */
+  &#{$when} {
+    color: _a(#{$level}-hover);
+    background-color: _a(#{$level}-backhover);
+  }
+}

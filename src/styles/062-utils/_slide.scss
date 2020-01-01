@@ -1,0 +1,7 @@
+.u-slide {
+  transform: translateX(105%);
+  &#{&}_off {
+    transition: transform .5s ease-out;
+    transform: translateX(0%);
+  }
+}

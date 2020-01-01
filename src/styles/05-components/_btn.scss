@@ -1,0 +1,108 @@
+/// ## Component that looks like BUTTON
+/// ### modifiers: _flat_, _raised_
+/// @group components
+/// @mods raised flat
+/// @pug
+/// each $size in $settings_buttonSizes
+///  button.c-btn(class='c-btn_'+$size) Hell of world
+
+.c-btn {
+  $_:&;
+  /* styles here */
+  cursor: pointer;
+  white-space: nowrap;
+  &:focus {
+    outline: none;
+  }
+  $when: ':not(#{&}_disabled):not([disabled]):not(:active):hover';
+
+  @include mixHover(button, $when);
+  @include mixTypography(button);
+
+  @include mixRectColorBorder(button);
+
+  @include mixEmSpaceSquish(button);
+  @include mixEachSizeTypo();
+
+
+  &#{&}_raised {
+    transition: transform, box-shadow 0.2s, 0.2s;
+    transform: translateY(0px);
+    box-shadow: none;
+    &#{$when}{
+      @include mixShadow(button);
+      transform: translateY(-1px);
+    }
+  }
+  &#{&}_flat {
+    box-shadow: none;
+  }
+  &#{&}_primary {
+    @include mixColor(primary);
+    @include mixHover(primary, $when);
+  }
+  &#{&}_secondary {
+    @include mixColor(secondary);
+    @include mixHover(secondary, $when);
+  }
+  &#{&}_info {
+    @include mixColor(info);
+    @include mixHover(info, $when);
+  }
+  &#{&}_alert {
+    @include mixColor(alert);
+    @include mixHover(alert, $when);
+  }
+  @each $icoName in map-keys($settings_icons) {
+    &#{&}_ico-#{$icoName} {
+      @include mixIconName($icoName);
+      &:before {
+        display: inline-block;
+        vertical-align: middle;
+        padding-right: .5em;
+        width: 1.8em;
+      }
+    }
+  }
+  @each $icoName in map-keys($settings_icons) {
+    &#{&}_ico-#{$icoName}-after {
+      @include mixIconName($icoName, after);
+      &:after {
+        display: inline-block;
+        vertical-align: middle;
+        padding-left: .5em;
+        width: 1.8em;
+      }
+    }
+  }
+
+  &#{&}_disabled,
+  &[disabled] {
+    box-shadow: none;
+    cursor: not-allowed;
+    @include mixColor(disabled);
+    font-weight: _a(disabled-font-weight);
+  }
+
+  &#{&}_nav {
+    @each $sizeName in $settings_buttonSizes {
+      &#{$_}_#{$sizeName} {
+        padding-right: calc(#{getFontSize($sizeName)} / 2);
+      }
+    }
+    position: relative;
+    overflow: visible;
+    padding-right: calc(#{getFontSize(m)} / 2);
+    &:after {
+      content: '';
+      position: absolute;
+      display: block;
+      height: 100%;
+      top: 0;
+      left: 99.5%;
+      width: getFontSize(m);
+      background: inherit;
+      clip-path: polygon(0% 0%, 100% 50%, 0% 100%, 0% 0%);
+    }
+  }
+}

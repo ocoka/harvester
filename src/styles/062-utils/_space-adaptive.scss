@@ -1,0 +1,8 @@
+@for $i from 1 through 25 {
+  .u-space-adaptive-3-#{$i} {
+    margin-bottom: $i*3vh;
+  }
+  .u-space-adaptive-4-#{$i} {
+    margin-bottom: $i*4vh;
+  }
+}

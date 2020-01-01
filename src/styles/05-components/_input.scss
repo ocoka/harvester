@@ -1,0 +1,6 @@
+.c-input {
+  @include mixRectColorBorder(input);
+  @include mixTypography(input);
+  @include mixEmSpaceSquish(input);
+  @include mixEachSizeTypo();
+}

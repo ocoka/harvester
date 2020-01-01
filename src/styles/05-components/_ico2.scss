@@ -1,0 +1,30 @@
+.c-ico2 {
+  @include mixIcon(none, $pos: after);
+  @each $icoName in map-keys($settings_icons) {
+    &#{&}_#{$icoName} {
+      @include mixIconName($icoName, $pos:after);
+    }
+  }
+  @each $icoSize in $settings_iconSizes {
+    &#{&}_#{$icoSize} {
+      @include mixIconSize($icoSize, $pos: after);
+    }
+  }
+  @each $size, $val in $settings_spaces {
+    &#{&}_pad-#{$size} {
+      &:after {
+        margin-left: $val;
+      }
+    }
+    &#{&}_off-#{$size} {
+      @include mixIconOffset($val, after);
+    }
+  }
+
+  &#{&}_abs {
+    position: relative;
+    &:after {
+      position: absolute;
+    }
+  }
+}

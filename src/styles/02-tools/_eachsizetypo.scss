@@ -1,0 +1,7 @@
+@mixin mixEachSizeTypo() {
+  @each $sizeName in $settings_buttonSizes {
+    &#{&}_#{$sizeName} {
+      font-size: getFontSize($sizeName);
+    }
+  }
+}
