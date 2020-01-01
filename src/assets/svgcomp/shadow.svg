@@ -1,0 +1,24 @@
+<svg version="1.1" viewBox="0 0 1000 330" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="1000" height="1000" fill="grey"/>
+  <defs>
+      <marker id="circle" markerWidth="8" markerHeight="8" refX="4" refY="4">
+          <circle cx="4" cy="4" r="4" stroke="none" fill="#f00"/>
+      </marker>
+      <marker id="circle2" markerWidth="8" markerHeight="8" refX="4" refY="4">
+          <circle cx="4" cy="4" r="4" stroke="none" fill="#00f"/>
+      </marker>
+    </defs>
+    <path transform="rotate(-90 165 165)" marker-start="url(#circle)" marker-end="url(#circle)" marker-mid="url(#circle)" fill="none" stroke="black" stroke-width="2px" d="m4 4 0 900 c0 72 48 56 48 0 0 -62 -18 -154 0 -186 19 -32 55 -31 55 0v53c0 135 52 122 54 73 l 3 -73 c 3 -92 86 -62 86 -18 0 139 4 84 4 166 0 58 67 80 67 -21 v -894 c -42 79 -234 114 -317 0 z"/>
+    <path marker-start="url(#circle2)" marker-end="url(#circle2)" marker-mid="url(#circle2)" fill="none" stroke="black" stroke-width="2px" d="m4 4 0 60
+      c17 16 26 22 39.5 32
+       0 0 32 19 39.5 21
+       16 6 39.5 10 39.5 10
+      v0
+      c0 0 27 7 39.5 5
+      l 39.5 0
+      c 15 0 39.5 -8 39.5 -8
+       0 0 0 0 39.5 -18
+       0 0 35 -21 40.5 -37
+      v -65
+      c -42 79 -234 114 -317 0 z"/>
+</svg>
