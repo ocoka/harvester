@@ -115,6 +115,58 @@ module.exports = (env, argv) => {
     devtool: argv.mode === 'production' ? false : 'module-nosources-source-map',
 
     module: {
+      rules: [
+        {
+          test: /\.js$/,
+          loader: 'babel-loader',
+          exclude: path.resolve('node_modules'),
+        },
+        {
+          test: /\.tsx?$/,
+          loader: 'awesome-typescript-loader',
+          options: {
+            useBabel: true,
+            useCache: true,
+            babelCore: '@babel/core',
+          },
+        },
+
+        {
+          test: /\.scss$/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            {
+              loader: 'css-loader',
+              options: { sourceMap: true }
+            },
+            {
+              loader: 'sass-loader',
+              options: { sourceMap: true }
+            }
+          ]
+        },
+        {
+          test: /\.(woff2?|eot|ttf|otf|svg)(\?.*)?$/,
+          use: [
+            {
+              loader: 'url-loader',
+              options: {
+                limit: 10000,
+                outputPath: 'assets/'
+              }
+            }
+          ]
+        },
+        {
+          test: /assets\/img\/.*\.png$/,
+          use: {
+            loader: 'file-loader',
+            options: {
+              outputPath: 'assets/',
+            }
+          }
+        }
+      ]
     },
     optimization: {
       splitChunks: {
