@@ -92,6 +92,18 @@ module.exports = (env, argv) => {
       path: path.resolve(__dirname, 'dist'),
       filename:
         argv.mode === 'production' ? '[name].[contenthash].js' : '[name].js',
+
+      devtoolModuleFilenameTemplate: info => {
+        // let respath = info.resourcePath.split('src/');
+        // respath = respath.length > 1 ? respath[1] : respath[0];
+        let respath = path.relative('dist', info.resourcePath);
+        if (info.query) {
+          let q = info.query.split(/[&?]/);
+          return path.join(q.filter(a => a.length).join('/'), respath);
+        } else {
+          return respath;
+        }
+      },
       //publicPath: argv.mode === 'production' ? 'dist/' : '',
     },
 
