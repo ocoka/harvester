@@ -1,0 +1,28 @@
+.hilight {
+  transition: outline 1s;
+  outline: lightgoldenrodyellow 4px dashed;
+  font-family: monospace;
+  &#{&}_fire {
+    transition: none;
+    outline-color: red;
+    &[data-rc]:before {
+      transition: none;
+      font-size: 5rem;
+    }
+  }
+  &[data-rc] {
+    position: relative;
+    &:before {
+      font-size: 1rem;
+      transition: font-size 1s;
+      z-index: 10;
+      position: absolute;
+      content: attr(data-rc);
+      display: block;
+      background-color: rgb(167,55,181);
+      color: white;
+      left: 0;
+      top: 0;
+    }
+  }
+}
