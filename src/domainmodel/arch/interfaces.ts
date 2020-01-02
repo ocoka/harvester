@@ -9,6 +9,27 @@ export interface AvailableAction {
 }
 export type AvailableActions = AvailableAction[];
 
+export interface ProcessStatus {
+  itemsCount: number;
+  itemsProcessed: number;
+}
+
+export interface FilterStore {
+  tags: {
+    exclude: Set<string>;
+  }
+}
+
+export interface Notification {
+  type: string;
+  message: string;
+}
+export type NotificationList = Notification[];
+export interface ElementAttribute {
+  url: string;
+  text: string;
+}
+
 export interface Bookmark {
   title: string;
   url: string | undefined;
