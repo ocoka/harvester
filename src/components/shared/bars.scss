@@ -1,0 +1,76 @@
+@import '@/style_api';
+$titleWidth: getFontSize(xxl);
+.bars {
+  $_: &;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: stretch;
+  align-content: stretch;
+  justify-content: flex-start;
+  height: 100%;
+  width: 100%;
+  &__el {
+    transition: max-width 0.4s ease;
+    flex: 1 1 $titleWidth;
+    overflow: hidden;
+    min-width: $titleWidth;
+    max-width: $titleWidth;
+    &#{&}_active {
+      > #{$_}__content {
+        pointer-events: all;
+        opacity: 1;
+      }
+      max-width: 100%;
+      & + #{$_}__el {
+        box-shadow: -8px 0 4px -7px _c(black);
+        border-radius: calc(#{$titleWidth} - 2px) 0 0 0;
+      }
+      > #{$_}__bar {
+        box-shadow: 8px 0 4px -7px _c(black);
+        border-radius: 0 calc(#{$titleWidth} - 2px) 0 0;
+      }
+    }
+    &:not(:first-child) {
+      border-left: 1px solid _a(menu-border-color);
+    }
+    position: relative;
+  }
+  &__bar {
+    @include mixColor(menu);
+    @include mixTypography(menu);
+    @include mixHover(menu);
+    padding-top: getFontSize(m);
+    cursor: pointer;
+    user-select: none;
+    width: $titleWidth;
+    line-height: $titleWidth;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    .c-ico {
+      @include mixCircle($titleWidth);
+      @include mixColor(tags);
+    }
+  }
+  &__name {
+    padding-top: getFontSize(m);
+    writing-mode: vertical-lr;
+    text-orientation: mixed;
+  }
+  &__content {
+    pointer-events: none;
+    transition: opacity 0.3s;
+    padding: $titleWidth 0 0 $titleWidth;
+    opacity: 0;
+    min-width: 70vw;
+    overflow-y: auto;
+    height: 100%;
+    &:after {
+      content: '';
+      clear:both;
+      display:table;
+    }
+  }
+}
