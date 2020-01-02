@@ -10,7 +10,6 @@ function getFromStorage() {
 function setToStorage(name: string) {
   try{
     localStorage.setItem('theme', name);
-    location.reload();
   }
   catch(e) {
     const url = new URL(location.href);
@@ -19,14 +18,18 @@ function setToStorage(name: string) {
   }
 }
 export function loadTheme(name: string) {
-  setToStorage(name);
+  const themeLoaderEl = document.getElementById('theme-loader') as HTMLLinkElement;
+  if (themeLoaderEl) {
+    themeLoaderEl.href=`themes/${name}_theme.css`;
+  }
+}
+export function changeTheme(theme: string) {
+  setToStorage(theme);
+  loadTheme(theme);
 }
 export function loadDefaultTheme() {
   const savedTheme = getFromStorage();
   if (savedTheme) {
-    const themeLoaderEl = document.getElementById('theme-loader') as HTMLLinkElement;
-    if (themeLoaderEl) {
-      themeLoaderEl.href=`/themes/${savedTheme}_theme.css`;
-    }
+    loadTheme(savedTheme);
   }
 }

@@ -35,7 +35,7 @@ const pageConfig = {
   links: [
     'https://fonts.googleapis.com/css?family=Montserrat',
     {
-      href: '/themes/main_theme.css',
+      href: 'themes/main_theme.css',
       rel: 'stylesheet',
       id: 'theme-loader'
     }
