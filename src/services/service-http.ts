@@ -1,14 +1,21 @@
 export enum HTTP_REQUEST_RESULT {
+  OK,
+  STATUS,
   TIMEOUT,
   WRONG_MIME,
-  STATUS,
   FAILURE,
-  OK
+  ABORTED
 }
 const _abortCallbacks: Function[] = [];
 
 function _unsetAbortCallback(abortrIndex: number) {
   _abortCallbacks.splice(abortrIndex);
+}
+export function abortAll() {
+  _abortCallbacks.forEach((_, i, arr) => {
+    arr.splice(i);
+    _();
+  });
 }
 export function xmlRequest(url: string) {
   return new Promise((resolve, reject) => {
@@ -23,6 +30,9 @@ export function xmlRequest(url: string) {
     xhr.onerror = () => {
       _unsetAbortCallback(abortrIndex);
       reject({status: HTTP_REQUEST_RESULT.FAILURE})
+    };
+    xhr.onabort = () => {
+      reject({status: HTTP_REQUEST_RESULT.ABORTED})
     };
     xhr.withCredentials = false;
     xhr.responseType= 'document';
