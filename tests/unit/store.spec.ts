@@ -1,6 +1,5 @@
 import { MappedSetStore, Store, MappedCounterStore } from '@/domainmodel/arch/abstract-store'
 import {BehaviorSubject, Subject } from 'rxjs';
-import { first } from 'rxjs/operators';
 class SingleStore extends Store<string> {
 
   constructor() {
@@ -15,6 +14,18 @@ class SingleStore extends Store<string> {
   static clearInstancesForTest(){
     this.instances.clear();
   }
+}
+class TypeA extends Store<string> {
+
+  constructor() {
+    super(new Subject<string>());
+  }
+  static clearInstancesForTest(){
+    this.instances.clear();
+  }
+}
+class TypeB extends TypeA {
+
 }
 class TestStore extends Store<Set<string>> {
   curValue?: Set<string>;
@@ -51,6 +62,7 @@ class TestNumberStore extends Store<number> {
     this.mdl = mdl;
   }
 }
+
 describe('MappedSetStore', () => {
   describe('when instantiated', () => {
     function instantiation() {
@@ -147,4 +159,30 @@ describe('Implemented Store singleton', () => {
     const i2 = SingleStore.getInstance();
     expect(i1).toEqual(i2);
   })
+});
+describe('Inherited singleton', () => {
+  afterEach(()=>{
+    TypeA.clearInstancesForTest();
+    TypeB.clearInstancesForTest();
+  });
+  it('should return different singletons for each type', () => {
+    const i1 = new TypeA();
+    const i2 = new TypeA();
+    const i3 = TypeA.getInstance(TypeA);
+    expect(() => {TypeA.getInstance(TypeB)}).toThrow();
+    const i4 = new TypeB();
+    const i5 = TypeB.getInstance(TypeB);
+
+    expect(i1 === i2).toBeFalsy();
+    expect(i1).toEqual(i3);
+    expect(i2).toEqual(i3);
+    expect(i2).toEqual(i3);
+    expect(i3).not.toEqual(i5);
+  });
+  it('allows to get instance of any type from any type', () => {
+    const ia = new TypeA();
+    const ib = new TypeB();
+    const ia1 = TypeB.getInstance(TypeA);
+    expect(ia === ia1).toBeTruthy();
+  });
 });

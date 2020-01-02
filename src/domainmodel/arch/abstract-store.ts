@@ -32,26 +32,36 @@ export abstract class Loggable {
       console.log(`${new Date().toLocaleTimeString()}:${this.constructor.name}.${text} from '${caller ? caller : "unknown"}'`);
     }
   }
+  protected static log(text: string, caller?: Function | string | null) {
+    if (window.reactorTrace) {
+      console.log(`${new Date().toLocaleTimeString()}:${this.name}.${text} from '${caller ? caller : "unknown"}'`);
+    }
+  }
 }
 
 export abstract class Store<T> extends Loggable {
 
   public static holders = new Map<string, Function>();
-  protected static instances = new Map<Function, Store<any>>();
+  public static instances = new Map<Function, Store<any>>();
 
-  static getInstance(clz: Function & { instances: Map<Function, Store<any>>, holders: Map<string, Function | null> }): Store<any> | never  {
-    if (!clz.instances.has(clz)) {
-      throw new Error(`getInstance invoked before Store of class ${clz.name} was created !`);
-    }
-    const instance = clz.instances.get(clz);
+  protected static addHolder(clz: Function & { holders: Map<string, Function | null> } , method: Function) {
     if (window.reactorTrace) {
-      const caller = getCaller(this.getInstance);
+      const caller = getCaller(method);
       if (caller) {
+        this.log(method.name, caller);
         clz.holders.set(getInvokerName(clz, caller), typeof caller === 'string' ? null: caller);
       }
     }
+  }
+  static getInstance(clz: Function & { holders: Map<string, Function | null> }): Store<any> | never  {
+    if (!this.instances.has(clz)) {
+      throw new Error(`getInstance invoked before Store of class ${clz.name} was created !`);
+    }
+    this.addHolder(clz, this.getInstance);
+    const instance = this.instances.get(clz);
     return instance!;
   }
+
   constructor (
     protected model: Subject<T>
   ) {
@@ -60,6 +70,7 @@ export abstract class Store<T> extends Loggable {
     if (window.reactorTrace) {
       const caller = getCaller(this.constructor);
       if (caller) {
+        this.log('constructed', caller);
         clz.holders.set(getInvokerName(clz, caller), caller);
       }
     }
