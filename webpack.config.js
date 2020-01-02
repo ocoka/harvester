@@ -87,6 +87,7 @@ module.exports = (env, argv) => {
     mode: argv.mode || 'development',
     entry: {
       main: './src/index',
+      demo: './src/demo.ts'
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
