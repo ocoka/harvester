@@ -1,5 +1,4 @@
-// TODO
-@mixin mixCircle() {
+@mixin mixCircle($size:false) {
   /* mixCircle()  */
   border-radius: 50%;
   display: inline-flex;
@@ -8,13 +7,12 @@
   align-content: center;
   justify-content: center;
   align-items: center;
-  @if not $pad {
+  @if $size {
     @include mixCircleSize($size);
   }
   @else {
-    height: 0;
-    width: 0;
-    padding: 1em;
+    height: 2em;
+    width: 2em;
   }
 }
 @mixin mixCircleSize($size) {
@@ -22,7 +20,6 @@
   $_size: getFontSize($size);
   width: $_size;
   height: $_size;
-  padding: 0;
 }
 
 @mixin mixCircleSizeAll($suf: '') {

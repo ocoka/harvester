@@ -29,10 +29,7 @@
   @if $i == null {
     @return var(--space-font-#{$val});
   }
-  @if $i > 0 {
-    $val: str-slice($val, $i+8, str-length($val)-1);
-  }
-  @return var(--space-font-#{$val});
+  @return $val;
 }
 @import 'styles/02-tools/color';
 @import 'styles/02-tools/hover';

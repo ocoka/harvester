@@ -94,20 +94,21 @@ $settings_atoms: (
   ), $name: input),
   tags: newLevel((
     backcolor: rgba(255, 255, 255, 0.5),
-    color: #3EA35A,
+    color: #816061,
     backhover: white,
-    hover: #3EA35A
+    hover: #816061
   ), $name: tags),
   tags2: newLevel((
     color: #3E66A3,
     hover: #3E66A3
   ), $name: tags2, $parent: tags),
   menu: newLevel((
-      color: _c(black),
-      backcolor: _c(grey87),
+      color: _c(grey50),
+      backcolor: _c(grey94),
+      hover: _c(black),
       border-width: 1px,
       border-style: solid,
-      border-color: _c(grey94),
+      border-color: _c(grey87),
       radius: getSize(s),
       font-weight: 800
     ), $name: menu
