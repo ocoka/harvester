@@ -13,7 +13,8 @@
     "extcp": "mkdir dist; cp -r src/extension/* dist/",
     "iconprepare": "node ./rename_icons.js",
     "stylepack": "run-for-every-file --src './src' --file '**/*_theme.scss' --run 'sass -I node_modules --no-source-map {{src-file}} | cross-env PRODUCTION=true postcss --verbose -o dist/themes/{{file-name}}.css'",
-    "stylepack-sm": "run(){ chokidar 'src/**/*.scss' -c \"sass -I node_modules src/$1_theme.scss src/$1_theme.css && postcss src/$1_theme.css -m --verbose -o dist/$1_theme.css\"; };run"
+    "stylepack-sm": "run(){ chokidar 'src/**/*.scss' -c \"sass -I node_modules src/$1_theme.scss src/$1_theme.css && postcss src/$1_theme.css -m --verbose -o dist/themes/$1_theme.css\"; };run",
+    "ctags": "./ctags.sh"
   },
   "author": "Ivan Sysoev",
   "license": "ISC",
