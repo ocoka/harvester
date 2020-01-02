@@ -1,0 +1,18 @@
+@import '../style_api';
+#app {
+  height: 100%;
+}
+.app {
+  height: 100%;
+  @include mixColor(body-1);
+  &__theme-click {
+    cursor: pointer;
+    color: _a(action-color);
+    @include mixHover(action);
+    @include mixTypography(action);
+    @include mixInlineSpace(s);
+    text-transform: uppercase;
+  }
+  &__footer {
+  }
+}
