@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css?family=Neucha&display=swap');
+$theme: white;
+
+$settings_sizes: (
+  4px: 4 ('xxs' 'xs' 's' 'm' 'xm' 'l' 'xl' 'xxl'),
+  8px: 32 ('x2' 'x3' 'x4'),
+  16px: 56 ('x5' 'x6' 'x7' 'x8' 'x9'),
+  32px: 136 ('x10' 'x11' 'x12' 'x13' 'x14' 'x15' 'x16')
+);
+$settings_user_def: (
+  font-weight: 400,
+  font-family: 'Neucha',
+  ratio: 4 / 3
+);
+@import 'styles/01-settings/index';
+@import 'styles/01-settings/colors_white';
+@import 'styles/01-settings/settings_white';
+@import 'styles/after-theme';
