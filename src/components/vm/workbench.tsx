@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { CoBarsMemo } from '@/components/shared/bars';
 import { AvailableActions } from '@/domainmodel/arch/interfaces';
+import { CoHarvestMemo } from './actions/harvest';
 
 const availableActions = [
 
@@ -8,7 +9,7 @@ const availableActions = [
     name: 'Process bookmars',
     id: 'harvest',
     icon: 'caterpillar-machine',
-    content: null
+    content: CoHarvestMemo
   },
   {
     name: 'Settings',

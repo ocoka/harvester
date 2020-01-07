@@ -1,0 +1,22 @@
+.harvest {
+  &__settings,
+  &__errors,
+  &__controls,
+  &__words {
+    border: 1px dashed red;
+  }
+  &__settings,
+  &__errors {
+    flex: 1 1 50%;
+    min-width: 10rem;
+  }
+  &__controls {
+  }
+  &__words {
+    flex: 0 0 100%;
+  }
+  &__work-area {
+    display: flex;
+    flex-flow: row wrap;
+  }
+}
