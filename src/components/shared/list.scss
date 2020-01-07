@@ -1,0 +1,13 @@
+@import '@/style_api';
+
+.list {
+  @include mixTypography(body-2);
+  @include mixColor(body-2);
+  margin: 0;
+  padding-left: getFontSize(xs);
+  list-style: none;
+  float: left;
+  text-align: left;
+  &__item {
+  }
+}
