@@ -1,7 +1,6 @@
 .hilight {
   transition: outline 1s;
   outline: lightgoldenrodyellow 4px dashed;
-  font-family: monospace;
   &#{&}_fire {
     transition: none;
     outline-color: red;
@@ -13,6 +12,7 @@
   &[data-rc] {
     position: relative;
     &:before {
+      font-family: monospace;
       font-size: 1rem;
       transition: font-size 1s;
       z-index: 10;
