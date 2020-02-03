@@ -39,12 +39,13 @@ export abstract class Loggable {
   }
 }
 
+type Constructor<R> = (R extends Store<R> ? new () => R  : any) & { holders: Map<string, Function | null> };
 export abstract class Store<T> extends Loggable {
 
   public static holders = new Map<string, Function>();
-  public static instances = new Map<Function, Store<any>>();
+  public static instances = new Map<Function, any>();
 
-  protected static addHolder(clz: Function & { holders: Map<string, Function | null> } , method: Function) {
+  protected static addHolder<R> (clz: Constructor<R> , method: Function) {
     if (window.reactorTrace) {
       const caller = getCaller(method);
       if (caller) {
@@ -53,13 +54,15 @@ export abstract class Store<T> extends Loggable {
       }
     }
   }
-  static getInstance(clz: Function & { holders: Map<string, Function | null> }): Store<any> | never  {
+  static getSingleInstance<R>(clz: Constructor<R>): R  {
     if (!this.instances.has(clz)) {
-      throw new Error(`getInstance invoked before Store of class ${clz.name} was created !`);
+      // throw new Error(`getSingleInstance invoked before Store of class ${clz.name} was created !`);
+      // earlier client should call constructor by himself
+      this.instances.set(clz, new clz());
     }
-    this.addHolder(clz, this.getInstance);
+    this.addHolder(clz, this.getSingleInstance);
     const instance = this.instances.get(clz);
-    return instance!;
+    return instance! as R;
   }
 
   constructor (

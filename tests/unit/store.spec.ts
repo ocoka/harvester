@@ -5,7 +5,7 @@ class SingleStore extends Store<string> {
   constructor() {
     super(new Subject<string>());
   }
-  static getInstance() {
+  static getSingleInstance() {
     if (!SingleStore.instances.has(SingleStore)) {
       SingleStore.instances.set(SingleStore, new SingleStore());
     }
@@ -151,12 +151,12 @@ describe('Implemented Store singleton', () => {
   })
   it('should get already created instance', ()=>{
     const i1 = new SingleStore();
-    const i2 = SingleStore.getInstance();
+    const i2 = SingleStore.getSingleInstance();
     expect(i1).toEqual(i2);
   })
   it('should auto instantiate', ()=>{
-    const i1 = SingleStore.getInstance();
-    const i2 = SingleStore.getInstance();
+    const i1 = SingleStore.getSingleInstance();
+    const i2 = SingleStore.getSingleInstance();
     expect(i1).toEqual(i2);
   })
 });
@@ -168,10 +168,9 @@ describe('Inherited singleton', () => {
   it('should return different singletons for each type', () => {
     const i1 = new TypeA();
     const i2 = new TypeA();
-    const i3 = TypeA.getInstance(TypeA);
-    expect(() => {TypeA.getInstance(TypeB)}).toThrow();
+    const i3 = TypeA.getSingleInstance(TypeA);
     const i4 = new TypeB();
-    const i5 = TypeB.getInstance(TypeB);
+    const i5 = TypeB.getSingleInstance(TypeB);
 
     expect(i1 === i2).toBeFalsy();
     expect(i1).toEqual(i3);
@@ -182,7 +181,7 @@ describe('Inherited singleton', () => {
   it('allows to get instance of any type from any type', () => {
     const ia = new TypeA();
     const ib = new TypeB();
-    const ia1 = TypeB.getInstance(TypeA);
+    const ia1 = TypeB.getSingleInstance(TypeA);
     expect(ia === ia1).toBeTruthy();
   });
 });
