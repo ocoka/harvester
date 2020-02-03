@@ -6,11 +6,11 @@ export class BookmarkStore extends Store<Bookmark[]> {
     constructor() {
       super(new Subject<Bookmark[]>())
     }
-    static getInstance() {
+    static getSingleInstance() {
       if (!BookmarkStore.instances.has(BookmarkStore)) {
         BookmarkStore.instances.set(BookmarkStore, new BookmarkStore());
       }
-      this.addHolder(BookmarkStore, this.getInstance);
+      this.addHolder(BookmarkStore, this.getSingleInstance);
       return BookmarkStore.instances.get(BookmarkStore)!;
     }
     requestBookmarks() {

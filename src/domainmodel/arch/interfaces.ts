@@ -34,3 +34,7 @@ export interface Bookmark {
   title: string;
   url: string | undefined;
 }
+
+export interface Settings {
+  maxHttpProcess: number;
+}
