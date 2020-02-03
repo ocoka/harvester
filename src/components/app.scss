@@ -7,12 +7,13 @@
   @include mixColor(body-1);
   &__theme-click {
     cursor: pointer;
-    color: _a(action-color);
-    @include mixHover(action);
-    @include mixTypography(action);
+    @include mixColor(primary);
+    @include mixHover(primary);
+    @include mixTypography(primary);
     @include mixInlineSpace(s);
     text-transform: uppercase;
   }
   &__footer {
+    text-align: left;
   }
 }
