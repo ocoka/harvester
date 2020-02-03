@@ -9,5 +9,9 @@
   float: left;
   text-align: left;
   &__item {
+    cursor: pointer;
+    &#{&}_selected {
+      @include mixColor(info);
+    }
   }
 }
