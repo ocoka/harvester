@@ -1,11 +1,6 @@
 // here all levels defined
 @import 'settings_main';
 $settings_atoms: map-merge( $settings_atoms, (
-  html: newLevel((
-    backcolor: $color-primary-1,
-    line-height: map-get($settings_atom_def, ratio),
-  ), $name: html),
-
   h1: newLevel((font-size: getFontSize('x8'), line-height: 1,                            font-weight: 300), $name: h1),
   h2: newLevel((font-size: getFontSize('x4'), line-height: 1,                            font-weight: 400), $name: h2),
   h3: newLevel((font-size: getFontSize('x3'), line-height: getLineHeight('x3', 1.0667),  font-weight: 400), $name: h3),
