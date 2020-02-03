@@ -1,0 +1,15 @@
+
+.switch,
+.switch-light {
+  display: inline-block;
+  cursor: pointer;
+  &__state {
+    transition: opacity 0.3s, transform 0.3s;
+  }
+}
+.switch {
+  width: 40px;
+}
+.switch-light {
+  width: 40px;
+}
