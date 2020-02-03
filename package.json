@@ -5,7 +5,7 @@
   "description": "Chrome extension to harvest bookmarked sites from network and reindexing it to allow future filtering and easy search, it has been written with React and Typescript",
   "scripts": {
     "watch": "rimraf dist && webpack-dev-server",
-    "watchonly": "rimraf dist && npm run extcp && webpack --watch --display-error-details",
+    "watchonly": "rimraf dist && npm run extcp && npm run stylepack && webpack --watch --display-error-details",
     "test": "rimraf coverage && karma start",
     "build": "rimraf dist && npm run extcp && webpack --display-error-details && npm run stylepack",
     "buildBCKUP": "rimraf dist && webpack --mode production && postcss dist/*.css --config afterbuild --replace",
