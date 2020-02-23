@@ -10,7 +10,6 @@ export class BookmarkStore extends Store<Bookmark[]> {
       if (!BookmarkStore.instances.has(BookmarkStore)) {
         BookmarkStore.instances.set(BookmarkStore, new BookmarkStore());
       }
-      this.addHolder(BookmarkStore, this.getSingleInstance);
       return BookmarkStore.instances.get(BookmarkStore)!;
     }
     requestBookmarks() {

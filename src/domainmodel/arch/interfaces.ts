@@ -38,3 +38,6 @@ export interface Bookmark {
 export interface Settings {
   maxHttpProcess: number;
 }
+export interface ListElement {
+  title: string;
+}
