@@ -3,62 +3,62 @@
     "baseUrl": ".",
     "allowJs": false,
     "allowSyntheticDefaultImports": false,
-    "allowUmdGlobalAccess" : false,	// false Allow accessing UMD globals from modules.
-    "allowUnreachableCode": false,	// false Do not report errors on unreachable code.
-    "allowUnusedLabels":	false,	// false Do not report errors on unused labels.
-    "alwaysStrict": true, //	false Parse in strict mode and emit "use strict" for each source file
-    "checkJs": false, //	false	Report errors in .js files. Use in conjunction with --allowJs.
-    "diagnostics": false, //	false	Show diagnostic information.
-    "disableSizeLimit": false, // false	Disable size limitation on JavaScript project.
-    "downlevelIteration": false, // false	Provide full support for iterables in for..of, spread and destructuring when targeting ES5 or ES3.
-    "emitBOM": false, //	false	Emit a UTF-8 Byte Order Mark (BOM) in the beginning of output files.
-    "emitDeclarationOnly": false, //	false	Only emit ‘.d.ts’ declaration files.
-    "emitDecoratorMetadata": false, //	false	Emit design-type metadata for decorated declarations in source. See issue #2577 for details.
-    "esModuleInterop": false,	// false Emit __importStar and __importDefault helpers for runtime babel ecosystem compatibility and enable --allowSyntheticDefaultImports for typesystem compatibility.
-    "experimentalDecorators": false, //	false	Enables experimental support for ES decorators.
-    "extendedDiagnostics": true, //	false	Show verbose diagnostic information
-    "forceConsistentCasingInFileNames": false, //	false	Disallow inconsistently-cased references to the same file.
-    "importHelpers": true, //	false	Import emit helpers (e.g. __extends, __rest, etc..) from tslib
-    "incremental": true, // if composite is on, false otherwise	Enable incremental compilation by reading/writing information from prior compilations to a file on disk. This file is controlled by the --tsBuildInfoFile flag.
-    "inlineSourceMap": false, //	false	Emit a single file with source maps instead of having a separate file.
-    "inlineSources": false, //	false	Emit the source alongside the sourcemaps within a single file; requires --inlineSourceMap or --sourceMap to be set.
-    "isolatedModules": false, //	false	Perform additional checks to ensure that separate compilation (such as with transpileModule or @babel/plugin-transform-typescript) would be safe.
-    "jsx": "react",	// "preserve"	Support JSX in .tsx files: "react", "preserve", "react-native". See JSX.
-    /* jsxFactory	string	"React.createElement"	Specify the JSX factory function to use when targeting react JSX emit, e.g. React.createElement or h. */
-    "listEmittedFiles": false, //	boolean	false	Print names of generated files part of the compilation.
-    "listFiles": false, //	boolean	false	Print names of files part of the compilation.
+    "allowUmdGlobalAccess" : false,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels":	false,
+    "alwaysStrict": true,
+    "checkJs": false,
+    "diagnostics": false,
+    "disableSizeLimit": false,
+    "downlevelIteration": false,
+    "emitBOM": false,
+    "emitDeclarationOnly": false,
+    "emitDecoratorMetadata": false,
+    "esModuleInterop": false,
+    "experimentalDecorators": false,
+    "extendedDiagnostics": true,
+    "forceConsistentCasingInFileNames": false,
+    "importHelpers": true,
+    "incremental": true,
+    "inlineSourceMap": false,
+    "inlineSources": false,
+    "isolatedModules": false,
+    "jsx": "react",
+    "listEmittedFiles": false,
+    "listFiles": false,
     "module": "ESNext",
-    "moduleResolution": "Node", //	string	module === "AMD" or "System" or "ES6" ? "Classic" : "Node"	Determine how modules get resolved. Either "Node" for Node.js/io.js style resolution, or "Classic". See Module Resolution documentation for more details.
-    "newLine": "lf", //	string	(platform specific)	Use the specified end of line sequence to be used when emitting files: "crlf" (windows) or "lf" (unix).”
-    "noEmit": false, //	boolean	false	Do not emit outputs.
-    "noEmitHelpers": true, //	boolean	false	Do not generate custom helper functions like __extends in compiled output.
-    "noEmitOnError": true, //	boolean	false	Do not emit outputs if any errors were reported.
-    "noErrorTruncation": true, //	boolean	false	Do not truncate error messages.
-    "noFallthroughCasesInSwitch": false, //	boolean	false	Report errors for fallthrough cases in switch statement.
-    "noImplicitAny": true, //	boolean	false	Raise error on expressions and declarations with an implied any type.
-    "noImplicitReturns": true, //	boolean	false	Report an error when not all code paths in function return a value.
-    "noImplicitThis": true, //	boolean	false	Raise error on this expressions with an implied any type.
-    "noImplicitUseStrict": false, //	boolean	false	Do not emit "use strict" directives in module output.
-    "noLib": false, //	boolean	false	Do not include the default library file (lib.d.ts).
-    "noResolve": false, //	boolean	false	Do not add triple-slash references or module import targets to the list of compiled files.
-    "noStrictGenericChecks": false, //	boolean	false	Disable strict checking of generic signatures in function types.
-    "noUnusedLocals": false, //	boolean	false	Report errors on unused locals.
-    "noUnusedParameters": false, //	boolean	false	Report errors on unused parameters.
-    "preserveConstEnums": false, //	boolean	false	Do not erase const enum declarations in generated code. See const enums documentation for more details.
-    "preserveSymlinks": true, //	boolean	false	Do not resolve symlinks to their real path; treat a symlinked file like a real one.
-    "preserveWatchOutput": true, //	boolean	false	Keep outdated console output in watch mode instead of clearing the screen
-    "pretty": true, //	boolean	true unless piping to another program or redirecting output to a file	Stylize errors and messages using color and context.
-    "removeComments": false, //	boolean	false	Remove all comments except copy-right header comments beginning with /*!
-    "resolveJsonModule": true, //	boolean	false	Include modules imported with .json extension.
-    "skipLibCheck": false, //	boolean	false	Skip type checking of all declaration files (*.d.ts).
-    "sourceMap": true, //	boolean	false	Generates corresponding .map file.
-    "strict": true, //	boolean	false	Enable all strict type checking options.
-    "strictBindCallApply": true, //	boolean	false	Enable stricter checking of the bind, call, and apply methods on functions.
-    "strictFunctionTypes": true, //	boolean	false	Disable bivariant parameter checking for function types.
-    "strictPropertyInitialization": true, //	boolean	false	Ensure non-undefined class properties are initialized in the constructor. This option requires --strictNullChecks be enabled in order to take effect.
-    "strictNullChecks": true, //	boolean	false	In strict null checking mode, the null and undefined values are not in the domain of every type and are only assignable to themselves and any (the one exception being that undefined is also assignable to void).
-    "suppressExcessPropertyErrors": true, //	boolean	false	Suppress excess property checks for object literals.
-    "suppressImplicitAnyIndexErrors": true, //	boolean	false	Suppress --noImplicitAny errors for indexing objects lacking index signatures. See issue #1232 for more details.
+    "moduleResolution": "Node",
+    "newLine": "lf",
+    "noEmit": false,
+    "noEmitHelpers": true,
+    "noEmitOnError": true,
+    "noErrorTruncation": true,
+    "noFallthroughCasesInSwitch": false,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitUseStrict": false,
+    "noLib": false,
+    "noResolve": false,
+    "noStrictGenericChecks": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "preserveConstEnums": false,
+    "preserveSymlinks": true,
+    "preserveWatchOutput": true,
+    "pretty": true,
+    "removeComments": false,
+    "resolveJsonModule": true,
+    "skipLibCheck": false,
+    "sourceMap": true,
+    "strict": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "strictNullChecks": true,
+    "suppressExcessPropertyErrors": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "useDefineForClassFields": true,
     "target": "ES2019",
     "paths": {
       "@/*": ["src/*"]
