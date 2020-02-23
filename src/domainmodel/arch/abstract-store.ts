@@ -2,22 +2,23 @@ import { Subject, BehaviorSubject } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { useRxBehaviour } from './seed/rx-aware-react-custom-hook';
 
+window.reactorTrace = true;
 let lambdaCounter = 1;
 
 function getInvokerName(owner: Function, invoker: Function | string): string {
   const invokerName = typeof invoker === 'string' ? invoker : invoker.name;
-  return `${owner.name}_${invokerName.length ? invokerName : `ƛ${lambdaCounter}`}`;
+  return `${owner.name} <- ${invokerName.length ? invokerName : `ƛ${lambdaCounter}`}`;
 }
 function prepare(e: any, callsites: any){
   return callsites;
 }
-function getCaller(f?: Function): Function | string | null {
+function getCaller(f?: Function, depth = 0): Function | string | null {
   if (window.reactorTrace && 'captureStackTrace' in Error) {
     const e = {} as any;
     const oldPrepare = Error.prepareStackTrace;
     Error.prepareStackTrace = prepare;
     Error.captureStackTrace(e, f);
-    const callSite = e.stack[0];
+    const callSite = e.stack[depth];
     let name = callSite.getTypeName();
     name = name ? `${name}.${callSite.getMethodName() || callSite.getFunctionName()}`: callSite.getFunction() ||callSite.getFunctionName();
     Error.prepareStackTrace = oldPrepare;
@@ -29,38 +30,33 @@ function getCaller(f?: Function): Function | string | null {
 export abstract class Loggable {
   protected log(text: string, caller?: Function | string | null) {
     if (window.reactorTrace) {
-      console.log(`${new Date().toLocaleTimeString()}:${this.constructor.name}.${text} from '${caller ? caller : "unknown"}'`);
+      console.log(`[${new Date().toLocaleTimeString()}] ${this.constructor.name}${text[0]==='"' || text[0]==='\'' ? " -> " : "."}${text} from '${caller ? caller : getCaller(this.log, 1)}'`);
     }
   }
   protected static log(text: string, caller?: Function | string | null) {
     if (window.reactorTrace) {
-      console.log(`${new Date().toLocaleTimeString()}:${this.name}.${text} from '${caller ? caller : "unknown"}'`);
+      console.log(`[${new Date().toLocaleTimeString()}] ${this.name}${text[0]==='"' || text[0]==='\'' ? " -> " : "::"}::${text} from '${caller ? caller : getCaller(this.log, 1)}'`);
     }
   }
 }
 
-type Constructor<R> = (R extends Store<R> ? new () => R  : any) & { holders: Map<string, Function | null> };
+type Constructor<R> = (new () => R);
 export abstract class Store<T> extends Loggable {
 
-  public static holders = new Map<string, Function>();
   public static instances = new Map<Function, any>();
 
-  protected static addHolder<R> (clz: Constructor<R> , method: Function) {
-    if (window.reactorTrace) {
-      const caller = getCaller(method);
-      if (caller) {
-        this.log(method.name, caller);
-        clz.holders.set(getInvokerName(clz, caller), typeof caller === 'string' ? null: caller);
-      }
-    }
-  }
   static getSingleInstance<R>(clz: Constructor<R>): R  {
     if (!this.instances.has(clz)) {
       // throw new Error(`getSingleInstance invoked before Store of class ${clz.name} was created !`);
       // earlier client should call constructor by himself
       this.instances.set(clz, new clz());
     }
-    this.addHolder(clz, this.getSingleInstance);
+    if (window.reactorTrace) {
+      const caller = getCaller(this.getSingleInstance);
+      if (caller) {
+        this.log(`getSingleInstance()`, caller);
+      }
+    }
     const instance = this.instances.get(clz);
     return instance! as R;
   }
@@ -74,7 +70,6 @@ export abstract class Store<T> extends Loggable {
       const caller = getCaller(this.constructor);
       if (caller) {
         this.log('constructed', caller);
-        clz.holders.set(getInvokerName(clz, caller), caller);
       }
     }
     clz.instances.set(clz, this);
@@ -92,24 +87,21 @@ export abstract class Store<T> extends Loggable {
   }
 }
 
-export abstract class MappedStore<K,V> extends Store<Map<K, V> | null> {
+export abstract class MappedStore<K,V> extends Store<{map: Map<K, V> | null}> {
 
   private _map: Map<K,V> | null = null;
   private _willNotify = false;
-  protected _caller: Function | string | undefined | null;
 
-  protected logSubscribed(caller?: Function | string | null) {
-    this.log('"subscribed to model"', caller);
+  protected subscribeToGetMap() {
     this.model.subscribe((val) => {
-      this.log('"got model"', caller);
-      this._map = val;
+        this._map = val.map;
     });
   }
   constructor(
-    protected model: Subject<Map<K, V> | null>,
+    protected model: Subject<{map: Map<K, V> | null}>,
     protected newValue: (value?: unknown) => V) {
     super(model);
-    this.logSubscribed(getCaller(this.constructor));
+    this.subscribeToGetMap();
   }
 
   private _runWorkerNoNotify(bindedWorker: () => void) {
@@ -120,7 +112,7 @@ export abstract class MappedStore<K,V> extends Store<Map<K, V> | null> {
 
   private _notifyMapChange() {
     if (this._map && !this._willNotify) {
-      this.model.next(this._map);
+      this.model.next({map: this._map});
     }
   }
 
@@ -132,49 +124,51 @@ export abstract class MappedStore<K,V> extends Store<Map<K, V> | null> {
 
   protected doWorkOnMap(worker: (map: Map<K, V>) => void) {
     if (!this._map) {
-      this.log('doWorkOnMap() ["new map"]', this._caller);
+      this.log('doWorkOnMap() [new map]');
       this._map = new Map<K, V>();
       this._runWorkerNoNotify(worker.bind(this, this._map));
       this._notifyMapChange();
     } else {
+      this.log('doWorkOnMap() [exist map]');
       worker(this._map);
     }
   }
   protected doWorkOnValue(key: K, worker: (value: V) => void, newValue?: unknown): void {
+    const caller = getCaller(this.doWorkOnValue);
     this.doWorkOnMap((map) => {
       const ss = map.get(key);
       if (!ss) {
+        this.log('doWorkOnValue()=>"worker" [new set]', caller);
         worker(this._initNewValue(map, key, newValue));
         this._notifyMapChange();
       } else {
+        this.log('doWorkOnValue()=>"worker" [exist set]', caller);
         worker(ss);
       }
     });
   }
 }
-export type SetStore<T> = Store<Set<T>>;
+export type SetStore<T> = Store<{set: Set<T>}>;
 export abstract class MappedSetStore<K, V> extends MappedStore<K, SetStore<V>> {
   addToSet = (key: K, newValue: V) => {
-    this._caller = getCaller(this.addToSet);
     this.doWorkOnValue(key, (value) => {
       const model = value.getModel();
       model.pipe(first()).subscribe((curSet) => {
-        curSet.add(newValue);
-        model.next(curSet);
+        curSet.set.add(newValue);
+        model.next({set: curSet.set});
       });
     }, newValue);
   }
 }
 class NumberStore extends Store<number> {
 }
-export abstract class MappedCounterStore<K = string> extends MappedStore<K, Store<number>> {
-  constructor(model: Subject<Map<K, Store<number>> | null >, newCounter: () => Subject<number>) {
-    super(model, (v) => {
+export abstract class MappedCounterStore<K = string> extends MappedStore<K, NumberStore> {
+  constructor(model: Subject<{map: Map<K, NumberStore> | null}>, newCounter: () => Subject<number>) {
+    super(model, () => {
       return new NumberStore(newCounter());
     })
   }
   incrementKey = (key: K) => {
-    this._caller = getCaller(this.incrementKey);
     this.doWorkOnValue(key, (value) => {
       const model = value.getModel();
       model.pipe(first()).subscribe((counter) => {

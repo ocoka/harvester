@@ -5,12 +5,6 @@ class SingleStore extends Store<string> {
   constructor() {
     super(new Subject<string>());
   }
-  static getSingleInstance() {
-    if (!SingleStore.instances.has(SingleStore)) {
-      SingleStore.instances.set(SingleStore, new SingleStore());
-    }
-    return SingleStore.instances.get(SingleStore)!;
-  }
   static clearInstancesForTest(){
     this.instances.clear();
   }
@@ -27,26 +21,26 @@ class TypeA extends Store<string> {
 class TypeB extends TypeA {
 
 }
-class TestStore extends Store<Set<string>> {
+class TestSetStore extends Store<{set: Set<string> }> {
   curValue?: Set<string>;
   constructor(arr?: string[]) {
-    super(new BehaviorSubject(new Set<string>(arr)));
+    super(new BehaviorSubject({set: new Set<string>(arr)}));
     this.getModel().subscribe((val) => {
-      this.curValue = val;
+      this.curValue = val.set;
     });
   }
 }
 
 class TestMapStore extends MappedSetStore<string, string> {
-  curValue?: Map<string, Store<Set<string>>>;
-  constructor(map?: Map<string, Store<Set<string>>>) {
-    super(new BehaviorSubject(map ? map : null), (v) => {
+  curValue?: Map<string, TestSetStore>;
+  constructor(map?: Map<string, TestSetStore>) {
+    super(new BehaviorSubject({ map: map ? map : null}), (v) => {
       const val = v && typeof v === 'string' ? [v] : void 0;
-      return new TestStore(val);
+      return new TestSetStore(val);
     })
     this.getModel().subscribe((val) => {
-      if (val) {
-        this.curValue = val;
+      if (val && val.map) {
+        this.curValue = val.map;
       }
     });
   }
@@ -67,13 +61,13 @@ describe('MappedSetStore', () => {
   describe('when instantiated', () => {
     function instantiation() {
       new TestMapStore(new Map());
-      new TestStore();
+      new TestSetStore();
     }
     it('should not throw an exception', () => {
       expect(instantiation).not.toThrow();
     })
     it('should have correct Map as model', () => {
-      const setStore = new TestStore();
+      const setStore = new TestSetStore();
       const store = new TestMapStore(new Map());
       expect(setStore.curValue).toBeDefined();
       expect(store.curValue).toBeDefined();
@@ -86,8 +80,8 @@ describe('MappedSetStore', () => {
       store.addToSet("t1", "v1");
       expect(store.curValue && store.curValue.has('t1')).toBeTruthy();
       const setStore = store.curValue && store.curValue.get('t1');
-      expect(setStore && (setStore as TestStore).curValue).toBeDefined();
-      const mdlSet = setStore && (setStore as TestStore).curValue;
+      expect(setStore && (setStore as TestSetStore).curValue).toBeDefined();
+      const mdlSet = setStore && (setStore as TestSetStore).curValue;
       expect(mdlSet && mdlSet.has('v1')).toBeTruthy();
     });
     it('should allow to add new element without store (autocreate)', () => {
@@ -96,8 +90,8 @@ describe('MappedSetStore', () => {
       store.addToSet("t2", "v2");
       expect(store.curValue).toBeDefined();
       const setStore = store.curValue && store.curValue.get('t2');
-      expect(setStore && (setStore as TestStore).curValue).toBeDefined();
-      const mdlSet = setStore && (setStore as TestStore).curValue;
+      expect(setStore && (setStore as TestSetStore).curValue).toBeDefined();
+      const mdlSet = setStore && (setStore as TestSetStore).curValue;
       expect(mdlSet && mdlSet.has('v2')).toBeTruthy();
     });
     it('two value for same key', () => {
@@ -105,7 +99,7 @@ describe('MappedSetStore', () => {
       store.addToSet("t2", "v2");
       store.addToSet("t2", "v3");
       const setStore = store.curValue && store.curValue.get('t2');
-      const mdlSet = setStore && (setStore as TestStore).curValue;
+      const mdlSet = setStore && (setStore as TestSetStore).curValue;
       expect(mdlSet && mdlSet.size).toEqual(2);
       expect(mdlSet && mdlSet.has('v2')).toBeTruthy();
       expect(mdlSet && mdlSet.has('v3')).toBeTruthy();
@@ -132,7 +126,7 @@ describe('MappedCounterStore', () => {
       () => {
         incNew = new BehaviorSubject(0);
         counter = new TestNumberStore(4);
-        mdl = new BehaviorSubject<Map<string, Store<number>> | null>(new Map([['a1', counter]]));
+        mdl = new BehaviorSubject<any>({ map: new Map([['a1', counter]])});
         store = new TestIncrStore(
           mdl,
           incrFn
@@ -151,12 +145,12 @@ describe('Implemented Store singleton', () => {
   })
   it('should get already created instance', ()=>{
     const i1 = new SingleStore();
-    const i2 = SingleStore.getSingleInstance();
+    const i2 = SingleStore.getSingleInstance(SingleStore);
     expect(i1).toEqual(i2);
   })
   it('should auto instantiate', ()=>{
-    const i1 = SingleStore.getSingleInstance();
-    const i2 = SingleStore.getSingleInstance();
+    const i1 = SingleStore.getSingleInstance(SingleStore);
+    const i2 = SingleStore.getSingleInstance(SingleStore);
     expect(i1).toEqual(i2);
   })
 });
