@@ -1,0 +1,90 @@
+.indicator {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  color: black;
+  position: relative;
+  font-size: 18px;
+  line-height: 20px;
+  font-family: monospace;
+
+  &::after,
+  &::before {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  &::before {
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: .7;
+    filter: blur(8px);
+  }
+
+  &#{&}_progress {
+    background-color: rgb(196,184,15);
+  }
+
+  &#{&}_progress::after {
+    content: '⏳';
+    animation: blop 4s linear infinite;
+  }
+
+  &#{&}_progress::before {
+    content: '';
+    background: rgb(47,240,23);
+    animation: blip 1s ease infinite;
+  }
+  &#{&}_done {
+    background-color: rgb(77,189,49);
+  }
+  &#{&}_done:before {
+    content: '';
+    background-color: #397714;
+  }
+  &#{&}_warning {
+    background-color: rgb(236,141,15);
+  }
+  &#{&}_warning:before {
+    content: '';
+    background-color: #ede519;
+  }
+  &#{&}_warning:after {
+    content: '⚠';
+  }
+  &#{&}_fault {
+    background-color: rgb(176,17,17);
+  }
+  &#{&}_fault:before {
+    content: '';
+    background-color: #f00;
+  }
+  &#{&}_fault:after {
+    content: '🚫';
+  }
+}
+
+@keyframes blop {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes blip {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0;
+  }
+}
