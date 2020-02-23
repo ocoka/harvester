@@ -19,7 +19,7 @@
   @include mixHover(button, $when);
   @include mixTypography(button);
 
-  @include mixRectColorBorder(button);
+  @include mixAll(button);
 
   @include mixEmSpaceSquish(button);
   @include mixEachSizeTypo();

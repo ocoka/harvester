@@ -2,7 +2,6 @@
 $settings_atoms: map-merge( $settings_atoms, (
   html: newLevel((
     backcolor: $color-primary-4,
-    image: null
   ), $name: html, $parent: html),
 
   body-2: newLevel(

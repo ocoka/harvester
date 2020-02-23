@@ -2,7 +2,6 @@
 $settings_atoms: (
   html: newLevel((
     backcolor: _c(white),
-    line-height: map-get($settings_atom_def, ratio),
   ), $name: html),
 
   h1: newLevel((font-size: getFontSize('x2'), line-height: 1,                           font-weight: 300), $name: h1),
@@ -110,7 +109,9 @@ $settings_atoms: (
       border-style: solid,
       border-color: _c(grey87),
       radius: getSize(s),
-      font-weight: 800
+      font-weight: 800,
+      font-size: getFontSize(l),
+      font-family: monospace
     ), $name: menu
   ),
   dialog: newLevel((

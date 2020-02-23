@@ -1,5 +1,5 @@
 .c-fan-head {
-  @include mixRectColorBorder(subtitle);
+  @include mixAll(subtitle);
   background-image: if($dark-theme,url("assets/svgcomp/border-light.svg"),url("assets/svgcomp/border.svg"));
   background-repeat: no-repeat;
   background-size: auto;

@@ -6,5 +6,6 @@
   &#{$when} {
     color: _a(#{$level}-hover);
     background-color: _a(#{$level}-backhover);
+    cursor: hand;
   }
 }

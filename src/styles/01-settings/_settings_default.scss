@@ -84,6 +84,5 @@ $settings_atom_def: map-merge((
   font-family: 'Montserrat',
   letter-spacing: inherit,
   ratio: 16 / 9,
-  em: getSize(nth($settings_defaultEmRatio,1))/getSize(nth($settings_defaultEmRatio,2)),
-  image: none
+  em: getSize(nth($settings_defaultEmRatio,1))/getSize(nth($settings_defaultEmRatio,2))
 ), $settings_user_def);

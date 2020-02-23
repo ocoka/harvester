@@ -1,0 +1,10 @@
+@mixin mixAll($level, $hover:false) {
+  /* mixAll($level: "#{$level}", $hover: #{$hover})*/
+  border-radius: _a(#{$level}-radius);
+  @include mixColor($level);
+  @include mixBorder($level);
+  @include mixShadow($level);
+  @if $hover {
+    @include mixHover($level);
+  }
+}

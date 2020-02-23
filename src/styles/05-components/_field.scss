@@ -7,7 +7,7 @@
   align-items: center;
   margin-top: 2em;
   @include mixTypography(input);
-  @include mixRectColorBorder(input);
+  @include mixAll(input);
   @each $sizeName in $settings_buttonSizes {
     &#{&}_#{$sizeName} {
       font-size: getFontSize($sizeName);

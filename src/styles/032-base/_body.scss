@@ -4,7 +4,11 @@ body {
   padding: 0;
   margin: 0;
 }
+html {
+  @include mixColor(html);
+}
 
 body {
   @include mixTypography(body-1);
+  @include mixColor(body-1);
 }
