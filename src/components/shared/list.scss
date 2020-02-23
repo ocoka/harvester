@@ -9,6 +9,7 @@
   float: left;
   text-align: left;
   &__item {
+    padding: getFontSize(xs);
     cursor: pointer;
     &#{&}_selected {
       @include mixColor(info);
